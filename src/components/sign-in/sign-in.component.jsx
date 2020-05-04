@@ -9,19 +9,19 @@ class SignIn extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     console.log("submited");
     event.preventDefault();
     this.setState({
       email: "",
-      password: ""
+      password: "",
     });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
     console.log(this.state.email);
     this.setState({ [name]: value });

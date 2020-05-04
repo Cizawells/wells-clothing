@@ -3,14 +3,37 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const config = {
-  apiKey: "AIzaSyC4b3n0zOJT_aKREUXQANp7E4lzkp3Q_84",
-  authDomain: "wells-clothing-db.firebaseapp.com",
-  databaseURL: "https://wells-clothing-db.firebaseio.com",
-  projectId: "wells-clothing-db",
-  storageBucket: "wells-clothing-db.appspot.com",
-  messagingSenderId: "617603404653",
-  appId: "1:617603404653:web:bda4d952bd6a5b83558064",
-  measurementId: "G-D5E7JMN2GC"
+  apiKey: "AIzaSyCAOg8oBwsjkKl4V0AE91acLsmb8U7AK0U",
+  authDomain: "crwn-db-f5363.firebaseapp.com",
+  databaseURL: "https://crwn-db-f5363.firebaseio.com",
+  projectId: "crwn-db-f5363",
+  storageBucket: "crwn-db-f5363.appspot.com",
+  messagingSenderId: "819410158236",
+  appId: "1:819410158236:web:e08449acddb82684bda359",
+  measurementId: "G-L9BG0F6W1J",
+};
+
+export const createUserProfileDocument = async (userAuth, additinalData) => {
+  if (!userAuth) return;
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const snapshot = await userRef.get();
+  console.log(snapshot);
+  if (!snapshot.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additinalData,
+      });
+    } catch (error) {
+      console.log("error creating user", error.message);
+    }
+  }
+  return userRef;
 };
 
 firebase.initializeApp(config);
