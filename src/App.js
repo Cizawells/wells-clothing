@@ -8,14 +8,13 @@ import SignInAndSignUpPage from "./pages/sign-in and sign-up/sign-in and sign-up
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
 
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/reducers/user.actions";
+import { setCurrentUser } from "./redux/actions/user.actions";
 
 class App extends React.Component {
   unSubscribeFromAuth = null;
 
   componentDidMount() {
     this.unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      console.log(userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef.onSnapshot((snapshot) => {
