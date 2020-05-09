@@ -6,6 +6,9 @@ import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import { createStructuredSelector } from "reselect";
+import { selectCartHidden } from "../../redux/selectors/cart.selectors";
+import { selectCurrentUser } from "../../redux/selectors/user.selectors";
 
 const Header = ({ currentUser, hidden }) => {
   return (
@@ -30,15 +33,15 @@ const Header = ({ currentUser, hidden }) => {
             SIGN IN
           </Link>
         )}
-        <CartIcon onClick={console.log("yes")} />
+        <CartIcon />
       </div>
       {hidden ? null : <CartDropdown />}
     </div>
   );
 };
-const mapstateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-  currentUser,
-  hidden,
+const mapstateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
 
 export default connect(mapstateToProps)(Header);
